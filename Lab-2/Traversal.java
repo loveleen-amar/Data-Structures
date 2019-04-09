@@ -41,39 +41,43 @@ class BinaryTree{
 	}
 
 	void printPostorder(){
-		Node node = root;
-		if (node == null) { 
-			return; 
-		} 
-		Stack<Node> nodeStack = new Stack<Node>(); 
-		nodeStack.push(root); 
-		while (nodeStack.empty() == false) { 
-			Node mynode = nodeStack.peek(); 
-			nodeStack.pop(); 
-			if (mynode.right != null) { 
-				nodeStack.push(mynode.right); 
-			} 
-			if (mynode.left != null) { 
-				nodeStack.push(mynode.left); 
-			} 
-			System.out.print(mynode.data + " "); 
-		} 
-		System.out.println();
+		Node temp = root;
+		Stack<Node> stack = new Stack<>(); 
+        while(true) { 
+            while(temp != null) { 
+                stack.push(temp); 
+                stack.push(temp); 
+                temp = temp.left; 
+            } 
+              
+            // Check for empty stack 
+            if(stack.empty()) return; 
+            temp = stack.pop(); 
+              
+            if(!stack.empty() && stack.peek() == temp) temp = temp.right; 
+              
+            else { 
+                  
+                System.out.print(temp.data + " "); temp = null; 
+            } 
+        } 
 	}
 
 	void printInorder(){
-		if (root == null) 
-			return; 
-		Stack<Node> s = new Stack<Node>(); 
-		Node curr = root; 
-		while (curr != null || s.size() > 0) { 
-			while (curr !=  null) { 
-				curr = curr.left; 
-			} 
-			curr = s.pop(); 
-			System.out.print(curr.data + " "); 
-			curr = curr.right; 
-		} 
+		Node temp = root;
+		if (temp == null) 
+            return; 
+        Stack<Node> s = new Stack<Node>(); 
+        Node curr = temp; 
+        while (curr != null || s.size() > 0) { 
+            while (curr !=  null){ 
+                s.push(curr); 
+                curr = curr.left; 
+            }
+            curr = s.pop(); 
+            System.out.print(curr.data + " "); 
+            curr = curr.right; 
+        } 
 	}
 
 	void printPreorder(){
@@ -83,7 +87,7 @@ class BinaryTree{
 		} 
 
 		Stack<Node> nodeStack = new Stack<Node>(); 
-		nodeStack.push(root); 
+		nodeStack.push(node); 
 		while (nodeStack.empty() == false) { 
 			Node mynode = nodeStack.peek(); 
 			System.out.print(mynode.data + " "); 
@@ -112,9 +116,9 @@ class BinaryTree{
 		
 		System.out.println("PostOrder: ");
 		tree.printPostorder();
-		System.out.println("InOrder: ");
-		// tree.printInorder();
-		System.out.println("PreOrder: ");
-		// tree.printPreorder();
+		System.out.println("\nInOrder: ");
+		tree.printInorder();
+		System.out.println("\nPreOrder: ");
+		tree.printPreorder();
 	}
 }
